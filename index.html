@@ -184,6 +184,7 @@
         font-size: 0.75em;
         font-family: "Overpass Mono", monospace;
         z-index: 2;
+        min-width: min-content;
       }
       .hoverable:hover {
         color: red;
@@ -209,7 +210,7 @@
         <div id="title"><h1>SpaghettiScript Interpreter</h1></div>
         <div id="input-container">
           <textarea id="editor" contenteditable="true" class="io">
-[1:o{o=-1}---≡2] ---≡1 [2⇢:O]</textarea
+[1~:O] ---≡1</textarea
           >
         </div>
         <div id="output-container">
@@ -228,6 +229,7 @@
             id="info"
             class="hoverable"
             href="https://esolangs.org/wiki/SpaghettiScript"
+            target="_blank"
             >Help</a
           >
         </div>
@@ -288,11 +290,6 @@
     <script>
       var editor = document.getElementById("editor");
       const output = document.getElementById("output");
-      document.getElementById("info").onclick = () => {
-        alert(
-          "Search for SpaghettiScript on esolangs.org to see the syntax.\nKeyboard Shortcuts:\nCtrl+=:≡\nCtrl+,:⇠\nCtrl+.:⇢\nCtrl+S:Save"
-        );
-      };
       document.getElementById("clear").onclick = () => {
         output.innerHTML = "";
       };
@@ -376,6 +373,6 @@
       };
     </script>
     <!-- Interpreter Script !-->
-    <script src="interpreter.js"></script>
+    <script src="main.js" type="module"></script>
   </body>
 </html>
