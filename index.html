@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SpaghettiScript Interpreter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      @import url(//fonts.googleapis.com/css?family=Lato:300:400);
+
+      body {
+        margin: 0;
+      }
+      p {
+        font-family: "Lato", sans-serif;
+        letter-spacing: 1px;
+        font-size: 14px;
+        color: #333333;
+        text-align: center;
+      }
+
+      .header {
+        position: relative;
+        background: linear-gradient(
+          60deg,
+          rgba(84, 58, 183, 1) 0%,
+          rgba(0, 172, 193, 1) 100%
+        );
+      }
+
+      .inner-header {
+        height: 65vh;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .flex {
+        /*Flexbox for containers*/
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+      }
+
+      .waves {
+        position: relative;
+        width: 100%;
+        height: 15vh;
+        margin-bottom: -7px; /*Fix for safari gap*/
+        min-height: 100px;
+        max-height: 150px;
+      }
+
+      .content {
+        position: relative;
+        height: 20vh;
+        text-align: center;
+        background-color: white;
+      }
+
+      /* Animation */
+
+      .parallax > use {
+        animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+      }
+      .parallax > use:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 7s;
+      }
+      .parallax > use:nth-child(2) {
+        animation-delay: -3s;
+        animation-duration: 10s;
+      }
+      .parallax > use:nth-child(3) {
+        animation-delay: -4s;
+        animation-duration: 13s;
+      }
+      .parallax > use:nth-child(4) {
+        animation-delay: -5s;
+        animation-duration: 20s;
+      }
+      @keyframes move-forever {
+        0% {
+          transform: translate3d(-90px, 0, 0);
+        }
+        100% {
+          transform: translate3d(85px, 0, 0);
+        }
+      }
+      /*Shrinking for mobile*/
+      @media (max-width: 768px) {
+        .waves {
+          height: 40px;
+          min-height: 40px;
+        }
+        .content {
+          height: 30vh;
+        }
+        h1 {
+          font-size: 24px;
+        }
+      }
+      /* END OF WAVES CSS */
+      h1 {
+        font-family: "Lato", sans-serif;
+        letter-spacing: 1px;
+        font-size: 2.3em;
+        color: white;
+        text-align: center;
+      }
+      #content-container {
+        height: 96vh;
+        width: 100%;
+      }
+      #input-container {
+        padding-top: 2vh;
+        width: 80vw;
+        height: 50vh;
+        margin: auto;
+      }
+      #editor {
+        width: 80vw;
+        height: 50vh;
+      }
+      .io {
+        background-color: white;
+        border: 2px solid black;
+        box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.2);
+        overflow: auto;
+        color: black;
+        font-family: "Overpass Mono", monospace;
+        padding: 10px 10px 10px 10px;
+        font-size: 1em;
+      }
+      #output-container {
+        width: 41vw;
+        height: 8vh;
+        margin: auto;
+        padding-top: 4vh;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+      }
+      #output {
+        width: 50vw;
+        height: 8vh;
+      }
+      #title {
+        padding-top: 0.1vh;
+        filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+      }
+      #left-buttons-container {
+        margin-left: 10vw;
+        margin-top: -8vh;
+        color: black;
+        font-size: 1.4em;
+        display: grid;
+        width: 15%;
+        gap: 2px;
+        grid-template-columns: 1fr 1fr;
+      }
+      #right-buttons-container {
+        position: relative;
+        width: 5vw;
+        margin: auto;
+        z-index: 2;
+        color: black;
+        font-size: 1.4em;
+      }
+      #interpret-button {
+        max-width: 11vw;
+        display: block;
+      }
+      #func {
+        text-align: center;
+        padding: 2px 13px 2px 2px;
+      }
+      .hoverable {
+        padding: 2px 8px 2px 8px;
+        display: inline-block;
+        text-align: center;
+        transition: color 0.3s, box-shadow 0.3s;
+        border: 2px solid black;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+        background-color: white;
+        cursor: pointer;
+        font-size: 0.75em;
+        font-family: "Overpass Mono", monospace;
+        z-index: 2;
+      }
+      .hoverable:hover {
+        color: red;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+      }
+      .hoverable:active {
+        box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+      }
+      #info {
+        text-decoration: none;
+        color: black;
+      }
+    </style>
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="header">
+      <div id="content-container">
+        <div id="title"><h1>SpaghettiScript Interpreter</h1></div>
+        <div id="input-container">
+          <textarea id="editor" contenteditable="true" class="io">
+[1:o{o=-1}---≡2] ---≡1 [2⇢:O]</textarea
+          >
+        </div>
+        <div id="output-container">
+          <div id="output" class="io"></div>
+        </div>
+
+        <div id="left-buttons-container">
+          <button id="fork" class="hoverable">≡</button>
+          <button id="right" class="hoverable">⇢</button>
+          <button id="left" class="hoverable">⇠</button>
+          <button id="func" class="hoverable">+Func</button>
+          <button id="load-button" class="hoverable">Load</button>
+          <button id="save-button" class="hoverable">Save</button>
+          <button id="clear" class="hoverable">Clear</button>
+          <a
+            id="info"
+            class="hoverable"
+            href="https://esolangs.org/wiki/SpaghettiScript"
+            >Help</a
+          >
+        </div>
+        <div id="right-buttons-container">
+          <button id="interpret-button" class="hoverable">Interpret</button>
+        </div>
+      </div>
+
+      <!--Waves Container -->
+      <div>
+        <svg
+          class="waves"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+          viewBox="0 24 150 28"
+          preserveAspectRatio="none"
+          shape-rendering="auto"
+        >
+          <defs>
+            <path
+              id="gentle-wave"
+              d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+            />
+          </defs>
+          <g class="parallax">
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="0"
+              fill="rgba(255,255,255,0.7"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="3"
+              fill="rgba(255,255,255,0.5)"
+            />
+            <use
+              xlink:href="#gentle-wave"
+              x="48"
+              y="5"
+              fill="rgba(255,255,255,0.3)"
+            />
+            <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+          </g>
+        </svg>
+      </div>
+      <!--Waves end -->
+    </div>
+    <!--Header ends -->
+
+    <!--Content starts -->
+    <div class="content flex">
+      <p>CSS Waves by Daniel Osterman</p>
+    </div>
+
+    <!-- Button Clicks Script -->
+    <script>
+      var editor = document.getElementById("editor");
+      const output = document.getElementById("output");
+      document.getElementById("info").onclick = () => {
+        alert(
+          "Search for SpaghettiScript on esolangs.org to see the syntax.\nKeyboard Shortcuts:\nCtrl+=:≡\nCtrl+,:⇠\nCtrl+.:⇢\nCtrl+S:Save"
+        );
+      };
+      document.getElementById("clear").onclick = () => {
+        output.innerHTML = "";
+      };
+      document.getElementById("fork").onclick = () => {
+        addToEditor("≡");
+      };
+      document.getElementById("right").onclick = () => {
+        addToEditor("⇢");
+      };
+      document.getElementById("left").onclick = () => {
+        addToEditor("⇠");
+      };
+      document.getElementById("func").onclick = () => {
+        let currentFunctionNumber = 0;
+        let funcs = editor.value.match(/\[\d+/g);
+        for (func in funcs) {
+          let newFuncNum = funcs[func].split("");
+          newFuncNum.shift();
+          newFuncNum = newFuncNum.join("");
+          let cur = parseInt(newFuncNum); //parseInt(funcs[func].charAt(1));
+          if (cur >= currentFunctionNumber) {
+            currentFunctionNumber = cur + 1;
+          }
+        }
+        addToEditor("[" + currentFunctionNumber + "");
+      };
+      document.getElementById("save-button").onclick = () => {
+        localStorage.setItem("spaghetti-save", editor.value);
+      };
+      document.getElementById("load-button").onclick = () => {
+        editor.value = localStorage.getItem("spaghetti-save");
+      };
+      editor.addEventListener("keydown", (event) => {
+        let ctrlDown = event.ctrlKey || event.metaKey;
+        if (ctrlDown && event.keyCode === 187) {
+          event.preventDefault();
+          addToEditor("≡");
+        }
+
+        if (ctrlDown && event.keyCode === 188) {
+          event.preventDefault();
+          addToEditor("⇠");
+        }
+
+        if (ctrlDown && event.keyCode === 190) {
+          event.preventDefault();
+          addToEditor("⇢");
+        }
+        if (ctrlDown && event.keyCode === 83) {
+          event.preventDefault();
+          editor.value = localStorage.getItem("spaghetti-save");
+        }
+      });
+
+      function addToEditor(toAdd) {
+        editor.insertAtCaret(toAdd);
+        editor.focus();
+      }
+
+      // Insert at the cursor positioon
+      HTMLTextAreaElement.prototype.insertAtCaret = function (text) {
+        text = text || "";
+        if (document.selection) {
+          // IE
+          this.focus();
+          var sel = document.selection.createRange();
+          sel.text = text;
+        } else if (this.selectionStart || this.selectionStart === 0) {
+          // Others
+          var startPos = this.selectionStart;
+          var endPos = this.selectionEnd;
+          this.value =
+            this.value.substring(0, startPos) +
+            text +
+            this.value.substring(endPos, this.value.length);
+          this.selectionStart = startPos + text.length;
+          this.selectionEnd = startPos + text.length;
+        } else {
+          this.value += text;
+        }
+      };
+    </script>
+    <!-- Interpreter Script !-->
+    <script src="interpreter.js"></script>
+  </body>
+</html>
