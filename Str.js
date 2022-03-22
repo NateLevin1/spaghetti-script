@@ -13,7 +13,9 @@ export class Str extends Stack {
 
   isNextNumber() {
     if (this.hasLeft()) {
-      return !isNaN(Number(this.peek()));
+      // space is considered 0 when passed into number
+      // so we need to check for it
+      return this.peek() == " " ? false : !isNaN(Number(this.peek()));
     }
     return false;
   }
