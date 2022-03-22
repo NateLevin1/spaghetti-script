@@ -1,24 +1,14 @@
-export class Str {
+import { Stack } from "./Stack.js";
+export class Str extends Stack {
   constructor(str) {
-    this._index = 0;
+    super();
     this._str = str;
   }
   _get(start, amount) {
     return this._str.substring(start, start + amount);
   }
-  peek(amount = 1) {
-    return this._get(this._index, amount);
-  }
-  take(amount = 1) {
-    if (this._index + amount > this._str.length) {
-      throw "Lexer Error: Expected more text";
-    }
-    const s = this._get(this._index, amount);
-    this._index += amount;
-    return s;
-  }
-  hasLeft() {
-    return this._index < this._str.length;
+  getLength() {
+    return this._str.length;
   }
 
   isNextNumber() {
@@ -27,8 +17,11 @@ export class Str {
     }
     return false;
   }
-  getFollowingNumber(errorMsg) {
-    if (!this.isNextNumber()) {
+  getFollowingNumber(errorMsg, options = { allowNegative: false }) {
+    if (
+      !this.isNextNumber() &&
+      !(options.allowNegative && this.peek() == "-")
+    ) {
       throw errorMsg;
     }
     let num = this.take();
