@@ -57,16 +57,18 @@ function lexOnce(str) {
       }
     }
     case "{": {
-      assert(str.take() == "o", "Expected 'o' after '{'");
-      assert(str.take() == "=", "Expected '=' after '{o'");
+      assert(str.take(), "o", "Expected 'o' after '{'", str);
+      assert(str.take(), "=", "Expected '=' after '{o'", str);
       const num = str.getFollowingNumber(
         "Lexer Error: Expected a number after '{o='"
       );
-      assert(str.take() == "}", `Expected '}' after '{o=${num}'`);
+      assert(str.take(), "}", `Expected '}' after '{o=${num}'`, str);
+      return { type: "call_if", num };
     }
   }
 }
 
-function assert(bool, msg) {
-  if (bool) throw `Lexer Error: ${msg}`;
+function assert(taken, shouldBe, msg, str) {
+  if (taken != shouldBe)
+    throw `Lexer Error: ${msg}, saw '${taken}' at character ${str.getIndex()}`;
 }
