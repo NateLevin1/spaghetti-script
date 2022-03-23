@@ -60,7 +60,8 @@ function lexOnce(str) {
       assert(str.take(), "o", "Expected 'o' after '{'", str);
       assert(str.take(), "=", "Expected '=' after '{o'", str);
       const num = str.getFollowingNumber(
-        "Lexer Error: Expected a number after '{o='"
+        "Lexer Error: Expected a number after '{o='",
+        { allowNegative: true }
       );
       assert(str.take(), "}", `Expected '}' after '{o=${num}'`, str);
       return { type: "call_if", num };
