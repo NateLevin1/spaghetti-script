@@ -49,6 +49,10 @@ function lexOnce(str) {
       const next = str.take();
       switch (next) {
         case "O":
+          const afterO = str.peek();
+          if (afterO == "A") {
+            return { type: "ascii_output" };
+          }
           return { type: "output" };
         case "o":
           return { type: "input" };
@@ -64,7 +68,7 @@ function lexOnce(str) {
         { allowNegative: true }
       );
       assert(str.take(), "}", `Expected '}' after '{o=${num}'`, str);
-      return { type: "call_if", num };
+      return { type: "func_call_if", num };
     }
   }
 }

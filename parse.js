@@ -34,7 +34,6 @@ import { WrappedLex } from "./WrappedLex.js";
 
 export const parse = (text) => {
   const lexArr = lex(text);
-  console.log("Lex: ", lexArr);
   return parseRoot(new WrappedLex(lexArr));
 };
 
@@ -53,6 +52,8 @@ function parseRoot(lex) {
       case "func_call":
         content.push({ type: "func_call", name: next.name });
         break;
+      default:
+        throw "Parse Error: '" + next.type + "' is invalid in global scope";
     }
   }
 
@@ -71,15 +72,17 @@ function parseFunc(lex, name) {
       break;
     }
 
-    if (next.type == "call_if") {
+    if (next.type == "func_call_if") {
       const call = lex.take()[0];
       if (call.type != "func_call") {
         throw `Parse Error: Expected a call after {o=${next.num}}`;
       }
-      content.push({ type: "call_if", if_num: next.num, func_name: call.name });
-    } else {
-      content.push(next);
+      content.push({ type: "func_call_if", num: next.num, name: call.name });
+      continue;
+    } else if (next.type == "func_def") {
+      throw "Parse Error: Cannot define a function in a function.";
     }
+    content.push(next);
   }
   return { type: "function", content, name };
 }

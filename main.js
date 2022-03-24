@@ -1,3 +1,4 @@
+import { interpret } from "./interpret.js";
 import { parse } from "./parse.js";
 
 window.onerror = (message, source, lineNo, colNo, error) => {
@@ -10,10 +11,10 @@ window.onerror = (message, source, lineNo, colNo, error) => {
 const editor = document.getElementById("editor");
 const interpretButton = document.getElementById("interpret-button");
 
-interpretButton.onclick = interpret;
+interpretButton.onclick = execute;
 
-function interpret() {
+function execute() {
   const text = editor.value;
   const parsed = parse(text);
-  console.log("Parse: ", parsed);
+  interpret(parsed);
 }
