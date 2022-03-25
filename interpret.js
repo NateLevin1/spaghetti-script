@@ -38,7 +38,9 @@ function interpretInstruction(instr, parse, state) {
       // repeat until we get valid input
       let num;
       while (true) {
-        const input = prompt("Please input a value (number/single letter)");
+        const input = prompt(
+          "Please input a value:\n(any number or a single letter, \\0-9 for literal number as ascii)"
+        );
         if (!input) {
           alert("Stopping program because no input was provided!");
           throw "Runtime Error: Stopped by user";
@@ -47,14 +49,23 @@ function interpretInstruction(instr, parse, state) {
           num = Number(input);
         } else {
           // if text, then make sure only one char and set to number
-          if (input.length == 1) {
-            num = input.charCodeAt(0);
-          } else {
+          let charToLookAt = 0;
+          if (/^\\[0-9]$/.test(input)) {
+            // Interpret as a string, without backslash (just the number)
+            // This allows for getting the ascii value of a number instead
+            // of the number itself
+            charToLookAt = 1;
+          } else if (input.length != 1) {
+            // This is an `else` because  if it is an escaped number the length
+            // can be two. We still need to check it is only one character for
+            // regular strings though, so we do that here
             alert(
               "Invalid input! Please enter a single character or a number."
             );
             continue;
           }
+
+          num = input.charCodeAt(charToLookAt);
         }
         break;
       }
