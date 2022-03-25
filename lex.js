@@ -39,6 +39,12 @@ function lexOnce(str) {
         return { type: "func_call", name };
       }
       return { type: "dec" };
+    case "=":
+      assert(str.take(3), "==≡", "Expected '==≡' after raw '='", str);
+      const name = str.getFollowingNumber(
+        "Lexer Error: Expected a function number after '===≡'"
+      );
+      return { type: "func_call", name, isGoto: true };
     case "⇢":
     case "→":
       return { type: "fork_right" };

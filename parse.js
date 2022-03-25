@@ -74,10 +74,15 @@ function parseFunc(lex, name) {
 
     if (next.type == "func_call_if") {
       const call = lex.take()[0];
-      if (call.type != "func_call") {
-        throw `Parse Error: Expected a call after {o=${next.num}}`;
+      if (call.type != "func_call" && call.type != "func_goto") {
+        throw `Parse Error: Expected a call after '{o=${next.num}}', instead found '${call.type}'`;
       }
-      content.push({ type: "func_call_if", num: next.num, name: call.name });
+      content.push({
+        type: "func_call_if",
+        num: next.num,
+        name: call.name,
+        isGoto: call.isGoto,
+      });
       continue;
     } else if (next.type == "func_def") {
       throw "Parse Error: Cannot define a function in a function.";

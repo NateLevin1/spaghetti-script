@@ -10,7 +10,8 @@ export const interpret = (parse) => {
 
 function interpretFunction(content, parse, state) {
   for (const instr of content) {
-    interpretInstruction(instr, parse, state);
+    const suspendExecution = interpretInstruction(instr, parse, state);
+    if (suspendExecution) break;
   }
 }
 
@@ -25,10 +26,8 @@ function interpretInstruction(instr, parse, state) {
         break;
       }
     case "func_call":
-      const fn = parse.functions[instr.name];
-      if (!fn) throw "Runtime Error: Unknown function '" + instr.name + "'";
-      interpretFunction(fn.content, parse, state);
-      break;
+    case "func_goto":
+      return interpretFunctionCallFromParse(instr, parse, state);
     case "inc":
       state.increment();
       break;
@@ -76,4 +75,13 @@ function interpretInstruction(instr, parse, state) {
     default:
       throw "Unknown instruction type '" + instr.type + "'";
   }
+}
+
+function interpretFunctionCallFromParse(instr, parse, state) {
+  const fn = parse.functions[instr.name];
+  if (!fn) throw "Runtime Error: Unknown function '" + instr.name + "'";
+  interpretFunction(fn.content, parse, state);
+
+  // suspend execution if it is a goto function (===≡n)
+  return instr.isGoto;
 }
