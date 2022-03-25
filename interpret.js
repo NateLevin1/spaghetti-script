@@ -43,7 +43,7 @@ function interpretInstruction(instr, parse, state) {
           alert("Stopping program because no input was provided!");
           throw "Runtime Error: Stopped by user";
         }
-        if (/[0-9]+/.test(input)) {
+        if (/^-?[0-9]+$/.test(input)) {
           num = Number(input);
         } else {
           // if text, then make sure only one char and set to number
