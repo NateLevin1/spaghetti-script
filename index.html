@@ -141,6 +141,7 @@
       #output {
         width: 50vw;
         height: 8vh;
+        display: block;
       }
       #title {
         padding-top: 0.1vh;
@@ -217,7 +218,11 @@ One number [3:o:O] ---≡3 ---≡100
           >
         </div>
         <div id="output-container">
-          <div id="output" class="io"></div>
+          <output id="output" class="io"
+            ><span style="color: rgba(0, 0, 0, 0.5); user-select: none"
+              >Output appears here</span
+            ></output
+          >
         </div>
 
         <div id="left-buttons-container">
