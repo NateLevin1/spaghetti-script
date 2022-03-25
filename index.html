@@ -319,31 +319,49 @@ One number [3:o:O] ---≡3 ---≡100
         }
         addToEditor("[" + currentFunctionNumber + "");
       };
-      document.getElementById("save-button").onclick = () => {
+      function saveEditor() {
         localStorage.setItem("spaghetti-save", editor.value);
+      }
+      function loadEditor() {
+        editor.value = localStorage.getItem("spaghetti-save");
+      }
+      document.getElementById("save-button").onclick = () => {
+        saveEditor();
       };
       document.getElementById("load-button").onclick = () => {
-        editor.value = localStorage.getItem("spaghetti-save");
+        loadEditor();
       };
       editor.addEventListener("keydown", (event) => {
         let ctrlDown = event.ctrlKey || event.metaKey;
-        if (ctrlDown && event.keyCode === 187) {
-          event.preventDefault();
-          addToEditor("≡");
-        }
 
-        if (ctrlDown && event.keyCode === 188) {
+        if (ctrlDown && !event.shiftKey) {
           event.preventDefault();
-          addToEditor("⇠");
-        }
-
-        if (ctrlDown && event.keyCode === 190) {
-          event.preventDefault();
-          addToEditor("⇢");
-        }
-        if (ctrlDown && event.keyCode === 83) {
-          event.preventDefault();
-          editor.value = localStorage.getItem("spaghetti-save");
+          switch (event.key) {
+            case "=":
+              addToEditor("≡");
+              break;
+            case "-":
+              addToEditor("~");
+              break;
+            case "\\":
+            case ";":
+              addToEditor("⑂");
+              break;
+            case ",":
+            case "[":
+              addToEditor("⇠");
+              break;
+            case ".":
+            case "]":
+              addToEditor("⇢");
+              break;
+            case "s":
+              saveEditor();
+              break;
+            case "l":
+              loadEditor();
+              break;
+          }
         }
       });
 

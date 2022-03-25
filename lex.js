@@ -78,7 +78,6 @@ function lexOnce(str) {
     }
     case "⑂":
       return { type: "flush_output" };
-      break;
   }
 }
 
