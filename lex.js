@@ -76,6 +76,9 @@ function lexOnce(str) {
       assert(str.take(), "}", `Expected '}' after '{o=${num}'`, str);
       return { type: "func_call_if", num };
     }
+    case "⑂":
+      return { type: "flush_output" };
+      break;
   }
 }
 

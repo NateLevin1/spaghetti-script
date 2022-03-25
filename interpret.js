@@ -4,7 +4,7 @@ export const interpret = (parse) => {
   console.log(parse);
   const state = new State();
   interpretFunction(parse.content, parse, state);
-  alert(state.getOutput());
+  state.flushOutput();
   console.log("Program finished executing.\n" + state);
 };
 
@@ -82,6 +82,9 @@ function interpretInstruction(instr, parse, state) {
       break;
     case "fork_left":
       state.pointerLeft();
+      break;
+    case "flush_output":
+      state.flushOutput();
       break;
     default:
       throw "Unknown instruction type '" + instr.type + "'";

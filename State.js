@@ -48,4 +48,13 @@ export class State {
   getOutput() {
     return this._output;
   }
+  flushOutput() {
+    if (this._output.length > 0) {
+      alert(this._output);
+      console.log("Flushed Output: " + this._output);
+      this._output = "";
+    } else {
+      console.log("No output to flush.");
+    }
+  }
 }
