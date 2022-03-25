@@ -340,12 +340,13 @@ One number [3:o:O] ---≡3 ---≡100
         let ctrlDown = event.ctrlKey || event.metaKey;
 
         if (ctrlDown && !event.shiftKey) {
-          event.preventDefault();
           switch (event.key) {
             case "=":
+              event.preventDefault();
               addToEditor("≡");
               break;
             case "-":
+              event.preventDefault();
               addToEditor("~");
               break;
             case "\\":
@@ -354,6 +355,7 @@ One number [3:o:O] ---≡3 ---≡100
               break;
             case ",":
             case "[":
+              event.preventDefault();
               addToEditor("⇠");
               break;
             case ".":
@@ -361,9 +363,11 @@ One number [3:o:O] ---≡3 ---≡100
               addToEditor("⇢");
               break;
             case "s":
+              event.preventDefault();
               saveEditor();
               break;
             case "l":
+              event.preventDefault();
               loadEditor();
               break;
           }
