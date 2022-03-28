@@ -1,0 +1,119 @@
+body {
+  margin: 0;
+}
+
+.content p {
+  font-family: "Lato", sans-serif;
+  letter-spacing: 1px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.header {
+  position: relative;
+  background: linear-gradient(
+    60deg,
+    rgba(84, 58, 183, 1) 0%,
+    rgba(0, 172, 193, 1) 100%
+  );
+}
+
+h1 {
+  font-family: "Lato", sans-serif;
+  letter-spacing: 1px;
+  font-size: 2.3em;
+  color: white;
+  text-align: center;
+}
+#content-container {
+  height: 96vh;
+  width: 100%;
+}
+#input-container {
+  padding-top: 2vh;
+  width: 80vw;
+  height: 50vh;
+  margin: auto;
+}
+#editor {
+  width: 80vw;
+  height: 50vh;
+}
+.io {
+  background-color: white;
+  border: 2px solid black;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.2);
+  overflow: auto;
+  color: black;
+  font-family: "Overpass Mono", monospace;
+  padding: 10px 10px 10px 10px;
+  font-size: 1em;
+}
+#output-container {
+  width: 41vw;
+  height: 8vh;
+  margin: auto;
+  padding-top: 4vh;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.25);
+}
+#output {
+  width: 50vw;
+  height: 8vh;
+  display: block;
+}
+#title {
+  padding-top: 0.1vh;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+}
+#left-buttons-container {
+  margin-left: 10vw;
+  margin-top: -8vh;
+  color: black;
+  font-size: 1.4em;
+  display: grid;
+  width: 15%;
+  gap: 2px;
+  grid-template-columns: 1fr 1fr;
+}
+#right-buttons-container {
+  position: relative;
+  width: 5vw;
+  margin: auto;
+  z-index: 2;
+  color: black;
+  font-size: 1.4em;
+}
+#interpret-button {
+  max-width: 11vw;
+  display: block;
+}
+#func {
+  text-align: center;
+  padding: 2px 13px 2px 2px;
+}
+.hoverable {
+  padding: 2px 8px 2px 8px;
+  display: inline-block;
+  text-align: center;
+  transition: color 0.3s, box-shadow 0.3s;
+  border: 2px solid black;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  cursor: pointer;
+  font-size: 0.75em;
+  font-family: "Overpass Mono", monospace;
+  z-index: 2;
+  min-width: min-content;
+}
+.hoverable:hover {
+  color: red;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.4);
+}
+.hoverable:active {
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4);
+}
+#info {
+  text-decoration: none;
+  color: black;
+}
