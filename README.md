@@ -3,6 +3,7 @@
 </a>
 
 # Spaghetti Script
+
 SpaghettiScript is an esoteric programming language similar to [bf](https://esolangs.org/wiki/Brainfuck) but with functions instead of loops.
 
 It is tape based, and Turing-complete. [View the full language description here!](https://esolangs.org/wiki/SpaghettiScript)
@@ -10,6 +11,7 @@ It is tape based, and Turing-complete. [View the full language description here!
 ## Code Examples
 
 Hello World (newlines for readability):
+
 ```
 [1~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:OA
 ⇢~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:OA
@@ -25,24 +27,35 @@ Hello World (newlines for readability):
 ⇢~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~:OA] ---≡1
 ```
 
-
 Count Down:
+
 ```
 [0:o---≡1] [1:O-{o=0}===≡2 ---≡1] [2] ---≡0
 ```
 
+Add from input:
+
+```
+[0 get input :o⇢:o ---≡1] ---≡0
+[1 add -⇠~⇢{o=0}===≡2 ---≡1] [2⇠:O]
+```
 
 ### Cat Programs
 
 String Cat (end with 0):
+
 ```
 [1:o {o=0}===≡11 :OA ---≡1] ---≡1 [11] ---≡100 [100 ⑂]
 ```
+
 Multiple Number Cat (end with 0):
+
 ```
 [2:o {o=0}===≡21 :O ---≡2] ---≡2 [21] ---≡100 [100 ⑂]
 ```
+
 Single Number Cat:
+
 ```
 [3:o:O] ---≡3
 ```
