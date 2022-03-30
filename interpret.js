@@ -44,8 +44,7 @@ function interpretInstruction(instr, parse, state) {
           "Please input a value:\n(any number or a single letter, \\0-9 for literal number as ascii)"
         );
         if (!input) {
-          alert("Stopping program because no input was provided!");
-          throw "Runtime Error: Stopped by user";
+          throw "Runtime Error: No input provided by user";
         }
         if (/^-?[0-9]+$/.test(input)) {
           num = Number(input);
