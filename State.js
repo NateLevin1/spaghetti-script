@@ -26,9 +26,17 @@ export class State {
     }
   }
   toString() {
-    return `tape=${JSON.stringify(this.array)}\nmemory=${
-      this.memory
-    }\npointer=${this.pointer}`;
+    let spaces = 0;
+    for (var i = 0; i < this.pointer; i++) {
+      console.log(this.array[i]);
+      spaces += 1 + this.array[i].toString().length;
+    }
+
+    return `${JSON.stringify(
+      this.array
+    )} o=${this.getAtPointer()} m=${this.getMemory()}\n ${" ".repeat(
+      spaces
+    )}${"^".repeat(this.getAtPointer().toString().length)}`;
   }
   getAtPointer() {
     return this.array[this.pointer];

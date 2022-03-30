@@ -1,10 +1,12 @@
 import { State } from "./State.js";
 
+const output = document.getElementById("output");
 export const interpret = (parse) => {
   console.log(parse);
   const state = new State();
   interpretFunction(parse.content, parse, state);
   state.flushOutput();
+  output.innerText += "\n\n\n\nState:\n" + state.toString();
   console.log("Program finished executing.\n" + state);
 };
 
