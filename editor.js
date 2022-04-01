@@ -1,4 +1,4 @@
-var editor = document.getElementById("editor");
+const editor = document.getElementById("editor");
 const output = document.getElementById("output");
 document.getElementById("clear").onclick = () => {
   output.innerHTML = "";
@@ -11,20 +11,6 @@ document.getElementById("right").onclick = () => {
 };
 document.getElementById("left").onclick = () => {
   addToEditor("⇠");
-};
-document.getElementById("func").onclick = () => {
-  let currentFunctionNumber = 0;
-  let funcs = editor.value.match(/\[\d+/g);
-  for (func in funcs) {
-    let newFuncNum = funcs[func].split("");
-    newFuncNum.shift();
-    newFuncNum = newFuncNum.join("");
-    let cur = parseInt(newFuncNum); //parseInt(funcs[func].charAt(1));
-    if (cur >= currentFunctionNumber) {
-      currentFunctionNumber = cur + 1;
-    }
-  }
-  addToEditor("[" + currentFunctionNumber + "");
 };
 function saveEditor() {
   localStorage.setItem("spaghetti-save", editor.value);
@@ -77,29 +63,33 @@ editor.addEventListener("keydown", (event) => {
 });
 
 function addToEditor(toAdd) {
-  editor.insertAtCaret(toAdd);
+  insertAtCaret(editor, toAdd);
   editor.focus();
 }
 
 // Insert at the cursor positioon
-HTMLTextAreaElement.prototype.insertAtCaret = function (text) {
-  text = text || "";
+const insertAtCaret = (textarea, text) => {
   if (document.selection) {
     // IE
-    this.focus();
-    var sel = document.selection.createRange();
+    textarea.focus();
+    const sel = document.selection.createRange();
     sel.text = text;
-  } else if (this.selectionStart || this.selectionStart === 0) {
+  } else if (textarea.selectionStart || textarea.selectionStart === 0) {
     // Others
-    var startPos = this.selectionStart;
-    var endPos = this.selectionEnd;
-    this.value =
-      this.value.substring(0, startPos) +
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+    textarea.value =
+      textarea.value.substring(0, startPos) +
       text +
-      this.value.substring(endPos, this.value.length);
-    this.selectionStart = startPos + text.length;
-    this.selectionEnd = startPos + text.length;
+      textarea.value.substring(endPos, textarea.value.length);
+    textarea.selectionStart = startPos + text.length;
+    textarea.selectionEnd = startPos + text.length;
   } else {
-    this.value += text;
+    textarea.value += text;
   }
 };
+
+if (localStorage.getItem("spaghetti-save")) {
+  // if they have something saved, then load it
+  loadEditor();
+}

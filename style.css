@@ -73,9 +73,10 @@ h1 {
   color: black;
   font-size: 1.4em;
   display: grid;
-  width: 15%;
+  width: 19%;
   gap: 2px;
   grid-template-columns: 1fr 1fr;
+  max-width: 230px;
 }
 #right-buttons-container {
   position: relative;
@@ -86,16 +87,11 @@ h1 {
   font-size: 1.4em;
 }
 #interpret-button {
-  max-width: 11vw;
-  display: block;
-}
-#func {
-  text-align: center;
-  padding: 2px 13px 2px 2px;
+  min-width: min-content;
 }
 .hoverable {
   padding: 2px 8px 2px 8px;
-  display: inline-block;
+  display: block;
   text-align: center;
   transition: color 0.3s, box-shadow 0.3s;
   border: 2px solid black;
@@ -105,7 +101,7 @@ h1 {
   font-size: 0.75em;
   font-family: "Overpass Mono", monospace;
   z-index: 2;
-  min-width: min-content;
+  width: 100%;
 }
 .hoverable:hover {
   color: red;
@@ -117,4 +113,5 @@ h1 {
 #info {
   text-decoration: none;
   color: black;
+  box-sizing: border-box;
 }

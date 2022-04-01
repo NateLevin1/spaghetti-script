@@ -1,5 +1,7 @@
 import { interpret } from "./interpret.js";
 import { parse } from "./parse.js";
+import "./editor.js";
+import "./examples.js";
 
 const output = document.getElementById("output");
 window.onerror = (message, source, lineNo, colNo, error) => {

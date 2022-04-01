@@ -16,6 +16,7 @@
       href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap"
       rel="stylesheet"
     />
+    <script defer src="main.js" type="module"></script>
   </head>
   <body>
     <div class="header">
@@ -23,10 +24,7 @@
         <div id="title"><h1>SpaghettiScript Interpreter</h1></div>
         <div id="input-container">
           <textarea id="editor" contenteditable="true" class="io">
-Text input (end with 0) [1:o {o=0}===≡11 :OA ---≡1] ---≡1 [11] ---≡100
-Multiple numbers (end with 0) [2:o {o=0}===≡21 :O ---≡2] ---≡2 [21] ---≡100
-One number [3:o:O] ---≡3 ---≡100
-[100 ⑂]</textarea
+[0:o---≡1] [1:O-{o=0}===≡2 ---≡1] [2] ---≡0</textarea
           >
         </div>
         <div id="output-container">
@@ -38,10 +36,21 @@ One number [3:o:O] ---≡3 ---≡100
         </div>
 
         <div id="left-buttons-container">
-          <button id="fork" class="hoverable">≡</button>
-          <button id="right" class="hoverable">⇢</button>
-          <button id="left" class="hoverable">⇠</button>
-          <button id="func" class="hoverable">+Func</button>
+          <button id="fork" class="hoverable" title="Ctrl+=">≡</button>
+          <button id="right" class="hoverable" title="Ctrl+.">⇢</button>
+          <button id="left" class="hoverable" title="Ctrl+,">⇠</button>
+          <select id="example" class="hoverable" title="Choose an example">
+            <option value="">Example</option>
+            <option value="helloWorld">Hello World</option>
+            <option value="countDown">Count Down</option>
+            <option value="addition">Addition</option>
+            <option value="multiplication">Multiplication</option>
+            <optgroup label="Cat Programs">
+              <option value="stringCat">String Cat</option>
+              <option value="multipleNumberCat">Multiple Number Cat</option>
+              <option value="singleNumberCat">Single Number Cat</option>
+            </optgroup>
+          </select>
           <button id="load-button" class="hoverable">Load</button>
           <button id="save-button" class="hoverable">Save</button>
           <button id="clear" class="hoverable">Clear</button>
@@ -104,8 +113,5 @@ One number [3:o:O] ---≡3 ---≡100
     <div class="content flex">
       <p>CSS Waves by Daniel Osterman</p>
     </div>
-
-    <script src="editor.js"></script>
-    <script src="main.js" type="module"></script>
   </body>
 </html>
