@@ -2,12 +2,27 @@ body {
   margin: 0;
 }
 
-.content p {
+.credits {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   font-family: "Lato", sans-serif;
   letter-spacing: 1px;
-  font-size: 14px;
-  color: rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
   text-align: center;
+}
+.credit {
+  color: rgba(0, 0, 0, 0.5);
+  font-size: 0.7rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+.made-by {
+  margin: 0 0;
+}
+a {
+  color: rgba(59, 116, 177, 1);
 }
 
 .header {
